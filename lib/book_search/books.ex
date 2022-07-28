@@ -23,6 +23,13 @@ defmodule BookSearch.Books do
     |> Repo.all()
   end
 
+  def list_books(author_id) do
+    Book
+    |> preload(:author)
+    |> where([book], book.author_id == ^author_id)
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single book.
 
@@ -52,7 +59,9 @@ defmodule BookSearch.Books do
 
   """
   def create_book(attrs \\ %{}) do
-    attrs.author
+    {author, attrs} = Map.pop!(attrs, :author)
+
+    author
     |> Ecto.build_assoc(:books, attrs)
     |> Book.changeset(attrs)
     |> Repo.insert()

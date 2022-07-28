@@ -9,12 +9,14 @@ defmodule BookSearch.BooksTest do
     import BookSearch.BooksFixtures
     import BookSearch.AuthorsFixtures
 
-    @invalid_attrs %{title: nil}
-
     test "list_books/0 returns all books" do
       author = author_fixture()
       book = book_fixture(author: author)
-      assert Books.list_books() == [book]
+
+      assert [fetched_book] = Books.list_books()
+      assert fetched_book.title == book.title
+      assert fetched_book.author_id == book.author_id
+      assert fetched_book.author == author
     end
 
     test "get_book!/1 returns the book with given id" do

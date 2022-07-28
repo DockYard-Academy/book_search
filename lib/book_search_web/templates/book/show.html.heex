@@ -9,5 +9,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.book_path(@conn, :edit, @book) %></span> |
-<span><%= link "Back", to: Routes.book_path(@conn, :index) %></span>
+<span><%= link "Edit", to: Routes.author_book_path(@conn, :edit, @author_id, @book) %></span> |
+<span><%= link "Back", to: Routes.author_book_path(@conn, :index, @author_id) %></span>

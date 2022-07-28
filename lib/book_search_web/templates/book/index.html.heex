@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>Author</th>
       <th>Title</th>
 
       <th></th>
@@ -11,16 +12,19 @@
   <tbody>
 <%= for book <- @books do %>
     <tr>
+      <td><%= book.author.name %></td>
       <td><%= book.title %></td>
 
       <td>
-        <span><%= link "Show", to: Routes.book_path(@conn, :show, book) %></span>
-        <span><%= link "Edit", to: Routes.book_path(@conn, :edit, book) %></span>
-        <span><%= link "Delete", to: Routes.book_path(@conn, :delete, book), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        <span><%= link "Show", to: Routes.author_book_path(@conn, :show, book.author_id, book) %></span>
+        <span><%= link "Edit", to: Routes.author_book_path(@conn, :edit, book.author_id, book) %></span>
+        <span><%= link "Delete", to: Routes.author_book_path(@conn, :delete, book.author_id, book), method: :delete, data: [confirm: "Are you sure?"] %></span>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<span><%= link "New Book", to: Routes.book_path(@conn, :new) %></span>
+<%= if assigns[:author_id] do %>
+  <span><%= link "New Book", to: Routes.author_book_path(@conn, :new, @author_id) %></span>
+<% end %>

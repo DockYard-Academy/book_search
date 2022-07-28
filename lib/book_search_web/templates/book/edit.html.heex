@@ -1,5 +1,5 @@
 <h1>Edit Book</h1>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.book_path(@conn, :update, @book)) %>
+<%= render "form.html", Map.put(assigns, :action, Routes.author_book_path(@conn, :update, @author_id, @book)) %>
 
-<span><%= link "Back", to: Routes.book_path(@conn, :index) %></span>
+<span><%= link "Back", to: Routes.author_book_path(@conn, :index, @author_id) %></span>
