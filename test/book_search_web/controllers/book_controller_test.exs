@@ -3,6 +3,7 @@ defmodule BookSearchWeb.BookControllerTest do
 
   import BookSearch.BooksFixtures
   import BookSearch.AuthorsFixtures
+  import BookSearch.TagsFixtures
 
   @create_attrs %{title: "some title"}
   @update_attrs %{title: "some updated title"}

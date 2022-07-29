@@ -4,6 +4,7 @@ defmodule BookSearch.Tags.Tag do
 
   schema "tags" do
     field :name, :string
+    many_to_many :books, BookSearch.Books.Book, join_through: "book_tags"
 
     timestamps()
   end

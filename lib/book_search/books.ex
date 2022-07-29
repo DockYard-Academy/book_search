@@ -60,10 +60,12 @@ defmodule BookSearch.Books do
   """
   def create_book(attrs \\ %{}) do
     {author, attrs} = Map.pop!(attrs, :author)
+    {tags, attrs} = Map.pop(attrs, :tags, [])
 
     author
     |> Ecto.build_assoc(:books, attrs)
     |> Book.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:tags, tags)
     |> Repo.insert()
   end
 

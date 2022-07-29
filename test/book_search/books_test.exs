@@ -8,6 +8,7 @@ defmodule BookSearch.BooksTest do
 
     import BookSearch.BooksFixtures
     import BookSearch.AuthorsFixtures
+    import BookSearch.TagsFixtures
 
     test "list_books/0 returns all books" do
       author = author_fixture()
@@ -34,6 +35,17 @@ defmodule BookSearch.BooksTest do
 
       assert {:ok, %Book{} = book} = Books.create_book(valid_attrs)
       assert book.title == "some title"
+    end
+
+    test "create_book/1 with tags" do
+      author = author_fixture()
+      tag1 = tag_fixture()
+      tag2 = tag_fixture()
+      valid_attrs = %{title: "some title", author: author, tags: [tag1, tag2]}
+
+      assert {:ok, %Book{} = book} = Books.create_book(valid_attrs)
+      assert book.title == "some title"
+      assert book.tags == [tag1, tag2]
     end
 
     test "create_book/1 with invalid data returns error changeset" do

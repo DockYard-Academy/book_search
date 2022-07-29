@@ -23,8 +23,12 @@ defmodule BookSearchWeb.BookController do
 
   def create(conn, %{"book" => book_params, "author_id" => author_id}) do
     author = BookSearch.Authors.get_author!(author_id)
+    {tag_ids, book_params} = Map.pop(book_params, "tags", [])
+    tags = Enum.map(tag_ids, &Tags.get_tag!/1)
 
-    case Books.create_book(Map.put(book_params, :author, author)) do
+    book_params = book_params |> Map.put(:author, author) |> Map.put(:tags, tags)
+
+    case Books.create_book(book_params) do
       {:ok, book} ->
         conn
         |> put_flash(:info, "Book created successfully.")
