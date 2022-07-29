@@ -2,6 +2,7 @@ defmodule BookSearchWeb.BookController do
   use BookSearchWeb, :controller
 
   alias BookSearch.Books
+  alias BookSearch.Tags
   alias BookSearch.Books.Book
 
   def index(conn, %{"author_id" => author_id}) do
@@ -15,8 +16,9 @@ defmodule BookSearchWeb.BookController do
   end
 
   def new(conn, %{"author_id" => author_id}) do
+    tags = Tags.list_tags()
     changeset = Books.change_book(%Book{})
-    render(conn, "new.html", changeset: changeset, author_id: author_id)
+    render(conn, "new.html", changeset: changeset, author_id: author_id, tags: tags)
   end
 
   def create(conn, %{"book" => book_params, "author_id" => author_id}) do
