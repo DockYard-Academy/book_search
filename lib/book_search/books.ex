@@ -23,13 +23,26 @@ defmodule BookSearch.Books do
     |> Repo.all()
   end
 
-  def list_books(title: title) do
+  def list_books(title: title, tags: tag_ids) do
     search = "%#{title}%"
 
-    Book
-    |> preload(:author)
-    |> where([book], ilike(book.title, ^search))
-    |> Repo.all()
+    query =
+      Book
+      |> preload(:author)
+      |> where([book], ilike(book.title, ^search))
+
+    query =
+      case tag_ids do
+        [] ->
+          query
+
+        tag_ids ->
+          query
+          |> join(:inner, [book], tag in assoc(book, :tags))
+          |> where([book, tag], tag.id in ^tag_ids)
+      end
+
+    Repo.all(query)
   end
 
   def list_books(author_id) do

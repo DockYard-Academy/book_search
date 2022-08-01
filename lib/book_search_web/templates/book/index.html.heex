@@ -15,6 +15,10 @@
       <%= text_input f, :title %>
       <%= error_tag f, :title %>
 
+      <%= label f, :tags %>
+      <%= multiple_select f, :tags, tag_options(), selected: [] %>
+      <%= error_tag f, :tags %>
+
       <div>
         <%= submit "Search" %>
       </div>
