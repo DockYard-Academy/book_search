@@ -23,6 +23,15 @@ defmodule BookSearch.Books do
     |> Repo.all()
   end
 
+  def list_books(title: title) do
+    search = "%#{title}%"
+
+    Book
+    |> preload(:author)
+    |> where([book], ilike(book.title, ^search))
+    |> Repo.all()
+  end
+
   def list_books(author_id) do
     Book
     |> preload(:author)

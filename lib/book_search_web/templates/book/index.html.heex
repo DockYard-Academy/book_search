@@ -10,18 +10,28 @@
     </tr>
   </thead>
   <tbody>
-<%= for book <- @books do %>
-    <tr>
-      <td><%= book.author.name %></td>
-      <td><%= book.title %></td>
+  <%= if assigns[:display_form] do %>
+    <.form let={f} for={@conn} method={"get"} action={Routes.book_path(@conn, :index)}>
+      <%= text_input f, :title %>
+      <%= error_tag f, :title %>
 
-      <td>
-        <span><%= link "Show", to: Routes.author_book_path(@conn, :show, book.author_id, book) %></span>
-        <span><%= link "Edit", to: Routes.author_book_path(@conn, :edit, book.author_id, book) %></span>
-        <span><%= link "Delete", to: Routes.author_book_path(@conn, :delete, book.author_id, book), method: :delete, data: [confirm: "Are you sure?"] %></span>
-      </td>
-    </tr>
-<% end %>
+      <div>
+        <%= submit "Search" %>
+      </div>
+    </.form>
+  <% end %>
+  <%= for book <- @books do %>
+      <tr>
+        <td><%= book.author.name %></td>
+        <td><%= book.title %></td>
+
+        <td>
+          <span><%= link "Show", to: Routes.author_book_path(@conn, :show, book.author_id, book) %></span>
+          <span><%= link "Edit", to: Routes.author_book_path(@conn, :edit, book.author_id, book) %></span>
+          <span><%= link "Delete", to: Routes.author_book_path(@conn, :delete, book.author_id, book), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+  <% end %>
   </tbody>
 </table>
 

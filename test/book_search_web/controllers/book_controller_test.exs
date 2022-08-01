@@ -17,6 +17,16 @@ defmodule BookSearchWeb.BookControllerTest do
       assert html_response(conn, 200) =~ book.title
     end
 
+    test "list all books filtered by search query", %{conn: conn} do
+      author = author_fixture(name: "Brandon Sanderson")
+      book = book_fixture(author: author, title: "The Final Empire")
+      non_matching_book = book_fixture(author: author, title: "The Hero of Ages")
+
+      conn = get(conn, Routes.book_path(conn, :index, title: book.title))
+      assert html_response(conn, 200) =~ book.title
+      refute html_response(conn, 200) =~ non_matching_book.title
+    end
+
     test "lists all books by author", %{conn: conn} do
       author1 = author_fixture(name: "Dennis E Taylor")
       author2 = author_fixture(name: "Patrick Rothfuss")
