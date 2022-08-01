@@ -54,6 +54,18 @@ defmodule BookSearch.BooksTest do
       assert {:error, %Ecto.Changeset{}} = Books.create_book(invalid_attrs)
     end
 
+    test "update_book/2 with tags" do
+      author = author_fixture()
+      tag1 = tag_fixture(name: "Fantasy")
+      tag2 = tag_fixture(name: "Fiction")
+      book = book_fixture(author: author, tags: [tag1])
+      update_attrs = %{title: "Name of the Wind", tags: [tag2]}
+
+      assert {:ok, %Book{} = book} = Books.update_book(book, update_attrs)
+      assert book.title == update_attrs.title
+      assert book.tags == [tag2]
+    end
+
     test "update_book/2 with valid data updates the book" do
       author = author_fixture()
       book = book_fixture(author: author)

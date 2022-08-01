@@ -1,6 +1,8 @@
 defmodule BookSearchWeb.TagControllerTest do
   use BookSearchWeb.ConnCase
 
+  import BookSearch.BooksFixtures
+  import BookSearch.AuthorsFixtures
   import BookSearch.TagsFixtures
 
   @create_attrs %{name: "some name"}
@@ -11,6 +13,20 @@ defmodule BookSearchWeb.TagControllerTest do
     test "lists all tags", %{conn: conn} do
       conn = get(conn, Routes.tag_path(conn, :index))
       assert html_response(conn, 200) =~ "Listing Tags"
+    end
+  end
+
+  describe "show" do
+    test "lists all books with the tag", %{conn: conn} do
+      author = author_fixture(name: "Dennis E Taylor")
+      tag = tag_fixture(name: "sci-fi")
+      tagged_book = book_fixture(author: author, title: "We are Legend (We are Bob)", tags: [tag])
+      untagged_book = book_fixture(author: author, title: "Name of the Wind")
+
+      conn = get(conn, Routes.tag_path(conn, :show, tag.id))
+      assert html_response(conn, 200) =~ tag.name
+      assert html_response(conn, 200) =~ tagged_book.title
+      refute html_response(conn, 200) =~ untagged_book.title
     end
   end
 

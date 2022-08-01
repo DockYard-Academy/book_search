@@ -9,5 +9,12 @@
 
 </ul>
 
+<%= for book <- @tag.books do %>
+    <tr>
+      <td><%= book.author.name %></td>
+      <td><%= book.title %></td>
+    </tr>
+<% end %>
+
 <span><%= link "Edit", to: Routes.tag_path(@conn, :edit, @tag) %></span> |
 <span><%= link "Back", to: Routes.tag_path(@conn, :index) %></span>

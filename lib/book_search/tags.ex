@@ -35,7 +35,7 @@ defmodule BookSearch.Tags do
       ** (Ecto.NoResultsError)
 
   """
-  def get_tag!(id), do: Repo.get!(Tag, id)
+  def get_tag!(id), do: Tag |> preload(books: [:author]) |> Repo.get!(id)
 
   @doc """
   Creates a tag.

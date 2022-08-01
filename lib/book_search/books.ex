@@ -44,7 +44,7 @@ defmodule BookSearch.Books do
       ** (Ecto.NoResultsError)
 
   """
-  def get_book!(id), do: Repo.get!(Book, id)
+  def get_book!(id), do: Book |> preload(:tags) |> Repo.get!(id)
 
   @doc """
   Creates a book.
@@ -82,8 +82,11 @@ defmodule BookSearch.Books do
 
   """
   def update_book(%Book{} = book, attrs) do
+    {tags, attrs} = Map.pop(attrs, :tags, [])
+
     book
     |> Book.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:tags, tags)
     |> Repo.update()
   end
 

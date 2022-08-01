@@ -16,9 +16,8 @@ defmodule BookSearchWeb.BookController do
   end
 
   def new(conn, %{"author_id" => author_id}) do
-    tags = Tags.list_tags()
     changeset = Books.change_book(%Book{})
-    render(conn, "new.html", changeset: changeset, author_id: author_id, tags: tags)
+    render(conn, "new.html", changeset: changeset, author_id: author_id)
   end
 
   def create(conn, %{"book" => book_params, "author_id" => author_id}) do
@@ -52,6 +51,10 @@ defmodule BookSearchWeb.BookController do
 
   def update(conn, %{"id" => id, "book" => book_params, "author_id" => author_id}) do
     book = Books.get_book!(id)
+
+    {tag_ids, book_params} = Map.pop(book_params, "tags", [])
+    tags = Enum.map(tag_ids, &Tags.get_tag!/1)
+    book_params = book_params |> Map.put(:tags, tags)
 
     case Books.update_book(book, book_params) do
       {:ok, book} ->

@@ -5,7 +5,7 @@ defmodule BookSearch.Books.Book do
   schema "books" do
     field :title, :string
     belongs_to :author, BookSearch.Authors.Author
-    many_to_many :tags, BookSearch.Tags.Tag, join_through: "book_tags"
+    many_to_many :tags, BookSearch.Tags.Tag, join_through: "book_tags", on_replace: :delete
 
     timestamps()
   end

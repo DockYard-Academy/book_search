@@ -6,6 +6,12 @@
     <strong>Title:</strong>
     <%= @book.title %>
   </li>
+  <li>
+    <strong>Tags:</strong>
+    <%= for tag <- @book.tags do %>
+      <%= tag.name %>
+    <% end %>
+  </li>
 
 </ul>
 

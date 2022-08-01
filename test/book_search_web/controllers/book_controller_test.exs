@@ -50,6 +50,20 @@ defmodule BookSearchWeb.BookControllerTest do
       assert html_response(conn, 200) =~ "Show Book"
     end
 
+    test "with tags", %{conn: conn} do
+      author = author_fixture()
+      tag = tag_fixture(name: "Fantasy")
+      create_attrs = %{title: "some title", tags: [tag.id]}
+      conn = post(conn, Routes.author_book_path(conn, :create, author), book: create_attrs)
+
+      assert %{id: id} = redirected_params(conn)
+      assert redirected_to(conn) == Routes.author_book_path(conn, :show, author, id)
+
+      conn = get(conn, Routes.author_book_path(conn, :show, author, id))
+      assert html_response(conn, 200) =~ "Show Book"
+      assert html_response(conn, 200) =~ tag.name
+    end
+
     test "renders errors when data is invalid", %{conn: conn} do
       author = author_fixture()
       conn = post(conn, Routes.author_book_path(conn, :create, author), book: @invalid_attrs)
@@ -68,6 +82,19 @@ defmodule BookSearchWeb.BookControllerTest do
 
   describe "update book" do
     setup [:create_book]
+
+    test "with tags", %{conn: conn, book: book} do
+      tag = tag_fixture(name: "Fantasy")
+      update_attrs = %{title: "Name of the Wind", tags: [tag.id]}
+
+      conn =
+        put(conn, Routes.author_book_path(conn, :update, book.author_id, book), book: update_attrs)
+
+      assert redirected_to(conn) == Routes.author_book_path(conn, :show, book.author_id, book)
+      conn = get(conn, Routes.author_book_path(conn, :show, book.author_id, book))
+      assert html_response(conn, 200) =~ update_attrs.title
+      assert html_response(conn, 200) =~ tag.name
+    end
 
     test "redirects when data is valid", %{conn: conn, book: book} do
       conn =
