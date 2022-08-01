@@ -9,6 +9,11 @@ defmodule BookSearchWeb.BookController do
     render(conn, "index.html", books: books, author_id: author_id)
   end
 
+  def index(conn, %{"title" => title}) do
+    books = Books.list_books(title: title)
+    render(conn, "index.html", books: books)
+  end
+
   def index(conn, _params) do
     books = Books.list_books()
     render(conn, "index.html", books: books)
