@@ -25,7 +25,12 @@ if Mix.env() == :dev do
       tag
     end)
 
-  Books.create_book(%{title: "Name of the Wind", author: author1, tags: [tag1, tag2]})
+  Books.create_book(%{
+    title: "Name of the Wind",
+    author: author1,
+    tags: [tag1, tag2],
+    book_contents: %{content: Faker.Lorem.paragraph(1000..2000)}
+  })
 
   Books.create_book(%{
     title: "We are Legend (We are Bob)",
