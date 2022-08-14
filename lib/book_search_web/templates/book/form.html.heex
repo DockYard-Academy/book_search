@@ -13,6 +13,11 @@
   <%= multiple_select f, :tags, tag_options(), selected: if assigns[:book], do: Enum.map(@book.tags, fn book -> book.id end), else: [] %>
   <%= error_tag f, :tags %>
 
+  <%= inputs_for f, :book_contents, fn i -> %>
+    <%= label i, :content %>
+    <%= textarea i, :content %>
+  <% end %>
+
   <div>
     <%= submit "Save" %>
   </div>

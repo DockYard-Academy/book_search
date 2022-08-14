@@ -48,10 +48,52 @@ defmodule BookSearch.BooksTest do
       assert book.tags == [tag1, tag2]
     end
 
+    test "create_book/1 with book content creates a book with book content" do
+      author = author_fixture()
+
+      valid_attrs = %{
+        title: "some title",
+        author: author,
+        book_contents: %{content: "some content"}
+      }
+
+      assert {:ok, %Book{} = book} = Books.create_book(valid_attrs)
+      assert book.title == "some title"
+      assert book.book_contents.content == "some content"
+    end
+
+    test "create_book/1 with large amounts of book content" do
+      author = author_fixture()
+
+      valid_attrs = %{
+        title: "some title",
+        author: author,
+        book_contents: %{content: Faker.Lorem.paragraph(1000..2000) |> IO.inspect()}
+      }
+
+      assert {:ok, %Book{} = book} = Books.create_book(valid_attrs)
+
+      assert book.book_contents.content == valid_attrs.book_contents.content
+    end
+
     test "create_book/1 with invalid data returns error changeset" do
       author = author_fixture()
       invalid_attrs = %{title: nil, author: author}
       assert {:error, %Ecto.Changeset{}} = Books.create_book(invalid_attrs)
+    end
+
+    test "update_book/2 with book content" do
+      author = author_fixture()
+      book = book_fixture(author: author, book_contents: %{content: "some content"})
+
+      update_attrs = %{
+        title: "Name of the Wind",
+        book_contents: %{content: "some updated content"}
+      }
+
+      assert {:ok, %Book{} = book} = Books.update_book(book, update_attrs)
+      assert book.title == "Name of the Wind"
+      assert book.book_contents.content == "some updated content"
     end
 
     test "update_book/2 with tags" do

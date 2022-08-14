@@ -13,6 +13,13 @@
     <% end %>
   </li>
 
+  <%= if @book.book_contents do %> 
+    <li>
+      <strong>Content:</strong>
+      <%= @book.book_contents.content %>
+    </li>
+  <% end %>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.author_book_path(@conn, :edit, @author_id, @book) %></span> |
