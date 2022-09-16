@@ -34,7 +34,6 @@ defmodule BookSearch.AuthorsTest do
     end
 
     test "list_authors/1 _ non matching name" do
-      author = author_fixture(name: "Andrew Rowe")
       assert Authors.list_authors("Dennis E Taylor") == []
     end
 
