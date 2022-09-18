@@ -68,7 +68,7 @@ defmodule BookSearch.BooksTest do
       valid_attrs = %{
         title: "some title",
         author: author,
-        book_contents: %{content: Faker.Lorem.paragraph(1000..2000) |> IO.inspect()}
+        book_contents: %{content: Faker.Lorem.paragraph(1000..2000)}
       }
 
       assert {:ok, %Book{} = book} = Books.create_book(valid_attrs)
