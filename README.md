@@ -1,6 +1,6 @@
 # BookSearch
 
-Book Search is a demonstration project for the [DockYard Academy](https://github.com/DockYard-Academy/beta_curriculum).
+Book Search is a demonstration project for [DockYard Academy](https://github.com/DockYard-Academy/beta_curriculum).
 
 To start your Phoenix server:
 
