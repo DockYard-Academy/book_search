@@ -9,6 +9,10 @@
   <%= text_input f, :title %>
   <%= error_tag f, :title %>
 
+  <%= label f, :author_id %>
+  <%= select f, :author_id, Enum.map(@authors, fn author -> {author.name, author.id} end) %>
+  <%= error_tag f, :author_id %>
+
   <div>
     <%= submit "Save" %>
   </div>

@@ -3,6 +3,7 @@ defmodule BookSearchWeb.BookController do
 
   alias BookSearch.Books
   alias BookSearch.Books.Book
+  alias BookSearch.Authors
 
   def index(conn, _params) do
     books = Books.list_books()
@@ -11,7 +12,8 @@ defmodule BookSearchWeb.BookController do
 
   def new(conn, _params) do
     changeset = Books.change_book(%Book{})
-    render(conn, "new.html", changeset: changeset)
+    authors = Authors.list_authors()
+    render(conn, "new.html", changeset: changeset, authors: authors)
   end
 
   def create(conn, %{"book" => book_params}) do
