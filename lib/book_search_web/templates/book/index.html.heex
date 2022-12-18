@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>Author</th>
       <th>Title</th>
 
       <th></th>
@@ -11,6 +12,7 @@
   <tbody>
 <%= for book <- @books do %>
     <tr>
+      <td><%= if book.author, do: book.author.name %></td>
       <td><%= book.title %></td>
 
       <td>

@@ -1,12 +1,17 @@
 <h1>Show Book</h1>
 
 <ul>
+  <%= if @book.author do %>
+    <li>
+      <strong>Author:</strong>
+      <%= @book.author.name %>
+    </li>
+  <% end %>
 
   <li>
     <strong>Title:</strong>
     <%= @book.title %>
   </li>
-
 </ul>
 
 <span><%= link "Edit", to: Routes.book_path(@conn, :edit, @book) %></span> |

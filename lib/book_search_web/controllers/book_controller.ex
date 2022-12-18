@@ -5,7 +5,7 @@ defmodule BookSearchWeb.BookController do
   alias BookSearch.Books.Book
 
   def index(conn, _params) do
-    books = Books.list_books()
+    books = Books.list_books() |> BookSearch.Repo.preload([:author])
     render(conn, "index.html", books: books)
   end
 
@@ -27,7 +27,7 @@ defmodule BookSearchWeb.BookController do
   end
 
   def show(conn, %{"id" => id}) do
-    book = Books.get_book!(id)
+    book = Books.get_book!(id) |> BookSearch.Repo.preload([:author])
     render(conn, "show.html", book: book)
   end
 
