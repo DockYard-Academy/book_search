@@ -7,6 +7,7 @@ defmodule BookSearch.BooksTest do
     alias BookSearch.Books.Book
 
     import BookSearch.BooksFixtures
+    import BookSearch.AuthorsFixtures
 
     @invalid_attrs %{title: nil}
 
@@ -27,6 +28,15 @@ defmodule BookSearch.BooksTest do
       assert book.title == "some title"
     end
 
+    test "create_book/1 with author creates a book with an associated author" do
+      author = author_fixture()
+      valid_attrs = %{title: "some title", author_id: author.id}
+
+      assert {:ok, %Book{} = book} = Books.create_book(valid_attrs)
+      assert book.title == "some title"
+      assert book.author_id == author.id
+    end
+
     test "create_book/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Books.create_book(@invalid_attrs)
     end
@@ -37,6 +47,17 @@ defmodule BookSearch.BooksTest do
 
       assert {:ok, %Book{} = book} = Books.update_book(book, update_attrs)
       assert book.title == "some updated title"
+    end
+
+    test "update_book/2 with author updates book's associated author" do
+      original_author = author_fixture()
+      updated_author = author_fixture()
+      book = book_fixture(author_id: original_author.id)
+      update_attrs = %{title: "some updated title", author_id: updated_author.id}
+
+      assert {:ok, %Book{} = book} = Books.update_book(book, update_attrs)
+      assert book.title == "some updated title"
+      assert book.author_id == updated_author.id
     end
 
     test "update_book/2 with invalid data returns error changeset" do

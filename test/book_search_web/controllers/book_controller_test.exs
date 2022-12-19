@@ -2,6 +2,7 @@ defmodule BookSearchWeb.BookControllerTest do
   use BookSearchWeb.ConnCase
 
   import BookSearch.BooksFixtures
+  import BookSearch.AuthorsFixtures
 
   @create_attrs %{title: "some title"}
   @update_attrs %{title: "some updated title"}
@@ -22,6 +23,23 @@ defmodule BookSearchWeb.BookControllerTest do
   end
 
   describe "create book" do
+    test "create a book with an associated author", %{conn: conn} do
+      author = author_fixture()
+      create_attrs_with_author = Map.put(@create_attrs, :author_id, author.id)
+
+      conn = post(conn, Routes.book_path(conn, :create), book: create_attrs_with_author)
+
+      assert %{id: id} = redirected_params(conn)
+      assert redirected_to(conn) == Routes.book_path(conn, :show, id)
+
+      conn = get(conn, Routes.book_path(conn, :show, id))
+
+      response = html_response(conn, 200)
+
+      assert response =~ "Show Book"
+      assert response =~ author.name
+    end
+
     test "redirects to show when data is valid", %{conn: conn} do
       conn = post(conn, Routes.book_path(conn, :create), book: @create_attrs)
 
@@ -49,6 +67,20 @@ defmodule BookSearchWeb.BookControllerTest do
 
   describe "update book" do
     setup [:create_book]
+
+    test "update a book with an associated author", %{conn: conn, book: book} do
+      author = author_fixture()
+      update_attrs_with_author = Map.put(@create_attrs, :author_id, author.id)
+
+      conn = put(conn, Routes.book_path(conn, :update, book), book: update_attrs_with_author)
+      assert redirected_to(conn) == Routes.book_path(conn, :show, book)
+      conn = get(conn, Routes.book_path(conn, :show, book))
+
+      response = html_response(conn, 200)
+
+      assert response =~ "some updated title"
+      assert response =~ author.name
+    end
 
     test "redirects when data is valid", %{conn: conn, book: book} do
       conn = put(conn, Routes.book_path(conn, :update, book), book: @update_attrs)

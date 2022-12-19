@@ -12,7 +12,7 @@ defmodule BookSearch.Books.Book do
   @doc false
   def changeset(book, attrs) do
     book
-    |> cast(attrs, [:title])
+    |> cast(attrs, [:title, :author_id])
     |> validate_required([:title])
   end
 end

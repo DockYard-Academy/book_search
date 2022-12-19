@@ -10,7 +10,7 @@
   <%= error_tag f, :title %>
 
   <%= label f, :author_id %>
-  <%= select f, :author_id, Enum.map(@authors, fn author -> {author.name, author.id} end) %>
+  <%= select f, :author_id, Enum.map(@authors, fn author -> {author.name, author.id} end), prompt: "Select an author" %>
   <%= error_tag f, :author_id %>
 
   <div>
