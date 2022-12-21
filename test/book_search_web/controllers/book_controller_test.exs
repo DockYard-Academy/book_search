@@ -70,7 +70,7 @@ defmodule BookSearchWeb.BookControllerTest do
 
     test "update a book with an associated author", %{conn: conn, book: book} do
       author = author_fixture()
-      update_attrs_with_author = Map.put(@create_attrs, :author_id, author.id)
+      update_attrs_with_author = Map.put(@update_attrs, :author_id, author.id)
 
       conn = put(conn, Routes.book_path(conn, :update, book), book: update_attrs_with_author)
       assert redirected_to(conn) == Routes.book_path(conn, :show, book)
