@@ -8,6 +8,7 @@ defmodule BookSearch.BooksTest do
 
     import BookSearch.BooksFixtures
     import BookSearch.AuthorsFixtures
+    import BookSearch.TagsFixtures
 
     @invalid_attrs %{title: nil}
 
@@ -37,6 +38,23 @@ defmodule BookSearch.BooksTest do
       assert book.author_id == author.id
     end
 
+    # Test the 'create_book/2' function with a request that includes tags.
+    test "create_book/1 with tags" do
+      # Create two tags.
+      tag1 = tag_fixture(name: "tag1")
+      tag2 = tag_fixture(name: "tag2")
+      # Define a map of valid book attributes.
+      valid_attrs = %{title: "some title"}
+
+      # Call the 'create_book/2' function with the valid attributes and the associated tags.
+      # Assert that the function returns an ':ok' tuple with a book struct as the second element.
+      # Assign the book struct to the 'book' variable.
+      assert {:ok, %Book{} = book} = Books.create_book(valid_attrs, [tag1, tag2])
+      # Assert that the book has the expected 'title' and 'tags' fields.
+      assert book.title == "some title"
+      assert book.tags == [tag1, tag2]
+    end
+
     test "create_book/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Books.create_book(@invalid_attrs)
     end
@@ -64,6 +82,25 @@ defmodule BookSearch.BooksTest do
       book = book_fixture()
       assert {:error, %Ecto.Changeset{}} = Books.update_book(book, @invalid_attrs)
       assert book == Books.get_book!(book.id)
+    end
+
+    # Test the 'update_book/3' function with a request that includes tags.
+    test "update_book/3 with tags" do
+      # Create two tags.
+      tag1 = tag_fixture()
+      tag2 = tag_fixture()
+      # Create a book with no tags.
+      book = book_fixture(tags: [])
+      # Define a map of valid book attributes.
+      update_attrs = %{title: "some updated title"}
+
+      # Call the 'update_book/3' function with the book fixture, the update attributes, and the tag to associate.
+      # Assert that the function returns an ':ok' tuple with a book struct as the second element.
+      # Assign the book struct to the 'book' variable.
+      assert {:ok, %Book{} = book} = Books.update_book(book, update_attrs, [tag1, tag2])
+      # Assert that the book has the expected 'title' and 'tags' fields.
+      assert book.title == "some updated title"
+      assert book.tags == [tag1, tag2]
     end
 
     test "delete_book/1 deletes the book" do

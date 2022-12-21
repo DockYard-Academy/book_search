@@ -14,6 +14,8 @@ alias BookSearch.Authors
 alias BookSearch.Authors.Author
 alias BookSearch.Books
 alias BookSearch.Books.Book
+alias BookSearch.Tags
+alias BookSearch.Tags.Tag
 alias BookSearch.Repo
 
 # Create an author without any books
@@ -55,3 +57,15 @@ case Repo.get_by(Book, title: "Name of the Wind") do
     |> Ecto.Changeset.put_assoc(:author, author)
     |> Repo.insert!()
 end
+
+# Create tags
+["fiction", "fantasy", "history", "sci-fi"]
+|> Enum.each(fn tag_name ->
+  case Repo.get_by(Tag, name: tag_name) do
+    %Tag{} = tag ->
+      IO.inspect(tag_name, label: "Tag Already Created")
+
+    nil ->
+      Tags.create_tag(%{name: tag_name})
+  end
+end)

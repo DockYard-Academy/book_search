@@ -12,6 +12,15 @@
     <strong>Title:</strong>
     <%= @book.title %>
   </li>
+
+  <li>
+    <strong>Tags:</strong>
+    <ul>
+      <%= for tag <- @book.tags do %>
+        <li><%= link tag.name, to: Routes.tag_path(@conn, :show, tag) %></li>
+      <% end %>
+    </ul>
+  </li>
 </ul>
 
 <span><%= link "Edit", to: Routes.book_path(@conn, :edit, @book) %></span> |

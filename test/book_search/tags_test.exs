@@ -17,7 +17,9 @@ defmodule BookSearch.TagsTest do
 
     test "get_tag!/1 returns the tag with given id" do
       tag = tag_fixture()
-      assert Tags.get_tag!(tag.id) == tag
+      found_tag = Tags.get_tag!(tag.id)
+      assert found_tag.id == tag.id
+      assert found_tag.name == tag.name
     end
 
     test "create_tag/1 with valid data creates a tag" do
@@ -42,7 +44,7 @@ defmodule BookSearch.TagsTest do
     test "update_tag/2 with invalid data returns error changeset" do
       tag = tag_fixture()
       assert {:error, %Ecto.Changeset{}} = Tags.update_tag(tag, @invalid_attrs)
-      assert tag == Tags.get_tag!(tag.id)
+      assert tag.id == Tags.get_tag!(tag.id).id
     end
 
     test "delete_tag/1 deletes the tag" do
