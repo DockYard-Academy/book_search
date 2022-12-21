@@ -22,24 +22,6 @@ defmodule BookSearchWeb.Router do
     # Define a route for the root path that maps to the index action of the PageController
     get "/", PageController, :index
 
-    # Define routes for the BookController actions
-    # Index action
-    get "/books", BookController, :index
-    # New action
-    get "/books/new", BookController, :new
-    # Show action
-    get "/books/:id", BookController, :show
-    # Edit action
-    get "/books/edit/:id", BookController, :edit
-    # Create action
-    post "/books", BookController, :create
-    # Update action
-    put "/books/:id", BookController, :update
-    # Update action
-    patch "/books/:id", BookController, :update
-    # Delete action
-    delete "/books/:id", BookController, :delete
-
     # Define routes for the AuthorController actions
     # Index action
     get "/authors", AuthorController, :index
@@ -57,6 +39,24 @@ defmodule BookSearchWeb.Router do
     patch "/authors/:id", AuthorController, :update
     # Delete action
     delete "/authors/:id", AuthorController, :delete
+
+    # Define routes for the BookController actions
+    # Index action
+    get "/books", BookController, :index
+    # New action
+    get "/books/new", BookController, :new
+    # Show action
+    get "/books/:id", BookController, :show
+    # Edit action
+    get "/books/edit/:id", BookController, :edit
+    # Create action
+    post "/books", BookController, :create
+    # Update action
+    put "/books/:id", BookController, :update
+    # Update action
+    patch "/books/:id", BookController, :update
+    # Delete action
+    delete "/books/:id", BookController, :delete
   end
 
   # Other scopes may use custom stacks.
