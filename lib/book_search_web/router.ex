@@ -20,6 +20,15 @@ defmodule BookSearchWeb.Router do
     get "/", PageController, :index
     resources "/authors", AuthorController
     resources "/books", BookController
+
+    get "/tags", TagController, :index
+    get "/tags/new", TagController, :new
+    post "/tags", TagController, :create
+    get "/tags/:id", TagController, :show
+    get "/tags/:id/edit", TagController, :edit
+    put "/tags/:id", TagController, :update
+    patch "/tags/:id", TagController, :update
+    delete "/tags/:id", TagController, :delete
   end
 
   # Other scopes may use custom stacks.
