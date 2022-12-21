@@ -14,11 +14,32 @@ defmodule BookSearchWeb.Router do
     plug :accepts, ["json"]
   end
 
+  # Set up a scope for the BookSearchWeb web application
   scope "/", BookSearchWeb do
+    # Use the :browser pipeline for all routes within this scope
     pipe_through :browser
 
+    # Define a route for the root path that maps to the index action of the PageController
     get "/", PageController, :index
-    resources "/authors", AuthorController
+
+    # Define routes for the AuthorController actions
+
+    # Index action
+    get "/authors", AuthorController, :index
+    # New action
+    get "/authors/new", AuthorController, :new
+    # Show action
+    get "/authors/:id", AuthorController, :show
+    # Edit action
+    get "/authors/edit/:id", AuthorController, :edit
+    # Create action
+    post "/authors", AuthorController, :create
+    # Update action
+    put "/authors/:id", AuthorController, :update
+    # Update action
+    patch "/authors/:id", AuthorController, :update
+    # Delete action
+    delete "/authors/:id", AuthorController, :delete
   end
 
   # Other scopes may use custom stacks.
