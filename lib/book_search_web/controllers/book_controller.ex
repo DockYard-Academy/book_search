@@ -39,14 +39,14 @@ defmodule BookSearchWeb.BookController do
   end
 
   def show(conn, %{"id" => id}) do
-    book = Books.get_book!(id) |> BookSearch.Repo.preload([:author, :tags])
+    book = Books.get_book!(id) |> BookSearch.Repo.preload([:author, :tags, :book_content])
     render(conn, "show.html", book: book)
   end
 
   def edit(conn, %{"id" => id}) do
-    book = Books.get_book!(id)
+    book = Books.get_book!(id) |> BookSearch.Repo.preload(:book_content)
 
-   # Use the 'Enum.map/2' function to transform the 'tags' field of the 'book' struct into a list of tag ids.
+    # Use the 'Enum.map/2' function to transform the 'tags' field of the 'book' struct into a list of tag ids.
     # The '& &1.id' function is passed to the '&' operator and used as the iterator function.
     tag_ids = Enum.map(book.tags, & &1.id)
 

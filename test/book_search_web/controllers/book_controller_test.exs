@@ -67,6 +67,23 @@ defmodule BookSearchWeb.BookControllerTest do
       assert response =~ author.name
     end
 
+    test "create a book with associated book content", %{conn: conn} do
+      book_content = %{full_text: "some full text"}
+      create_attrs_with_book_content = Map.put(@create_attrs, :book_content, book_content)
+
+      conn = post(conn, Routes.book_path(conn, :create), book: create_attrs_with_book_content)
+
+      assert %{id: id} = redirected_params(conn)
+      assert redirected_to(conn) == Routes.book_path(conn, :show, id)
+
+      conn = get(conn, Routes.book_path(conn, :show, id))
+
+      response = html_response(conn, 200)
+
+      assert response =~ "Show Book"
+      assert response =~ book_content.full_text
+    end
+
     test "redirects to show when data is valid", %{conn: conn} do
       conn = post(conn, Routes.book_path(conn, :create), book: @create_attrs)
 

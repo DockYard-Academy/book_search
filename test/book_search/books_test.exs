@@ -38,6 +38,14 @@ defmodule BookSearch.BooksTest do
       assert book.author_id == author.id
     end
 
+    test "create_book/1 with book content creates a book with associated book content" do
+      valid_attrs = %{title: "some title", book_content: %{full_text: "some full text"}}
+
+      assert {:ok, %Book{} = book} = Books.create_book(valid_attrs)
+      assert book.title == "some title"
+      assert book.book_content.full_text == "some full text"
+    end
+
     # Test the 'create_book/2' function with a request that includes tags.
     test "create_book/1 with tags" do
       # Create two tags.
@@ -76,6 +84,14 @@ defmodule BookSearch.BooksTest do
       assert {:ok, %Book{} = book} = Books.update_book(book, update_attrs)
       assert book.title == "some updated title"
       assert book.author_id == updated_author.id
+    end
+
+    test "update_book/2 with book content book's associated book content" do
+      book = book_fixture()
+      update_attrs = %{book_content: %{full_text: "updated full text"}}
+
+      assert {:ok, %Book{} = book} = Books.update_book(book, update_attrs)
+      assert book.book_content.full_text == "updated full text"
     end
 
     test "update_book/2 with invalid data returns error changeset" do

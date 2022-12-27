@@ -21,6 +21,13 @@
       <% end %>
     </ul>
   </li>
+
+  <%= if @book.book_content do %>
+    <li>
+      <strong>Full Text:</strong>
+      <%= @book.book_content.full_text %>
+    </li>
+  <% end %>
 </ul>
 
 <span><%= link "Edit", to: Routes.book_path(@conn, :edit, @book) %></span> |
