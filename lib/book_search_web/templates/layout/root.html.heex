@@ -22,7 +22,7 @@
             <% end %>
           </ul>
         </nav>
-        <h1>BookSearch</h1>
+        <h1><%= link "BookSearch", to: Routes.page_path(@conn, :index) %></h1>
       </section>
     </header>
     <%= @inner_content %>
