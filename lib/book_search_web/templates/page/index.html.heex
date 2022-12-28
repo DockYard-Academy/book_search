@@ -1,40 +1,49 @@
 <section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>Peace of mind from prototype to production</p>
+  <h1><%= gettext "My name is %{name}!", name: "Brooklin" %></h1>
+  <p>This is a demonstration project I built during DockYard Academy</p>
 </section>
 
 <section class="row">
   <article class="column">
-    <h2>Resources</h2>
+    <h2>Topics Covered</h2>
     <ul>
       <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
+        <a href="https://hexdocs.pm/phoenix/overview.html">The Phoenix Framework</a>
       </li>
       <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
+        <a href="https://hexdocs.pm/phoenix/routing.html">Routing</a>
       </li>
       <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.6/CHANGELOG.md">v1.6 Changelog</a>
+        <a href="https://hexdocs.pm/phoenix/controllers.html">Controllers</a>
+      </li>
+      <li>
+        <a href="https://hexdocs.pm/phoenix/views.html#content">Views and Templates</a>
+      </li>
+      <li>
+        Forms with <a href="https://hexdocs.pm/phoenix_html/Phoenix.HTML.html">Phoenix.HTML</a>
+      </li>
+      <li>
+        <a href="https://hexdocs.pm/phoenix/contexts.html">Contexts</a>
+      </li>
+      <li>
+        <a href="https://hexdocs.pm/phoenix/ecto.html">Ecto</a>
+      </li>
+      <li>
+        <a href="https://hexdocs.pm/phoenix/fly.html#content">Deployment With Fly</a>
       </li>
     </ul>
   </article>
   <article class="column">
-    <h2>Help</h2>
+    <h2>Features</h2>
     <ul>
       <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
+        <%= link "Authors", to: Routes.author_path(@conn, :index) %>
       </li>
       <li>
-        <a href="https://web.libera.chat/#elixir">#elixir on Libera Chat (IRC)</a>
+        <%= link "Books", to: Routes.book_path(@conn, :index) %>
       </li>
       <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-      <li>
-        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
-      </li>
-      <li>
-        <a href="https://discord.gg/elixir">Elixir on Discord</a>
+        <%= link "Tags", to: Routes.tag_path(@conn, :index) %>
       </li>
     </ul>
   </article>

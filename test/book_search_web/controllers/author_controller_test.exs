@@ -16,13 +16,13 @@ defmodule BookSearchWeb.AuthorControllerTest do
     end
 
     test "lists all authors filtered by search query", %{conn: conn} do
-      author = author_fixture(name: "Patrick Rothfus")
+      author = author_fixture(name: "Patrick Rothfuss")
       conn = get(conn, Routes.author_path(conn, :index, name: author.name))
       assert html_response(conn, 200) =~ author.name
     end
 
     test "lists all authors _ not matching search query", %{conn: conn} do
-      author = author_fixture(name: "Patrick Rothfus")
+      author = author_fixture(name: "Patrick Rothfuss")
       conn = get(conn, Routes.author_path(conn, :index, name: "Brandon Sanderson"))
       refute html_response(conn, 200) =~ author.name
     end

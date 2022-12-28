@@ -23,7 +23,6 @@ defmodule BookSearchWeb.Router do
     get "/", PageController, :index
 
     # Define routes for the AuthorController actions
-
     # Index action
     get "/authors", AuthorController, :index
     # New action
@@ -40,6 +39,42 @@ defmodule BookSearchWeb.Router do
     patch "/authors/:id", AuthorController, :update
     # Delete action
     delete "/authors/:id", AuthorController, :delete
+
+    # Define routes for the BookController actions
+    # Index action
+    get "/books", BookController, :index
+    # New action
+    get "/books/new", BookController, :new
+    # Show action
+    get "/books/:id", BookController, :show
+    # Edit action
+    get "/books/edit/:id", BookController, :edit
+    # Create action
+    post "/books", BookController, :create
+    # Update action
+    put "/books/:id", BookController, :update
+    # Update action
+    patch "/books/:id", BookController, :update
+    # Delete action
+    delete "/books/:id", BookController, :delete
+
+    # Define routes for the TagController actions
+    # Index action
+    get "/tags", TagController, :index
+    # New action
+    get "/tags/new", TagController, :new
+    # Create action
+    post "/tags", TagController, :create
+    # Show action
+    get "/tags/:id", TagController, :show
+    # Edit action
+    get "/tags/:id/edit", TagController, :edit
+    # Update action
+    put "/tags/:id", TagController, :update
+    # Update action
+    patch "/tags/:id", TagController, :update
+    # Delete action
+    delete "/tags/:id", TagController, :delete
   end
 
   # Other scopes may use custom stacks.

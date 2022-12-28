@@ -1,0 +1,37 @@
+<h1>Show Tag</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @tag.name %>
+  </li>
+
+</ul>
+<ul>
+
+<li>
+  <strong>Books:</strong>
+  <ul>
+    <!-- Iterate over the 'books' field of the 'tag' variable and render a list item element for each book. -->
+    <%= for book <- @tag.books do %>
+      <li>
+        <!-- Link the book's title to its corresponding 'show' page using the 'Routes.book_path/3' function. -->
+        <%= link book.title, to: Routes.book_path(@conn, :show, book) %>
+        <!-- If the book has an 'author' field, render a link to the author's 'show' page using the 'Routes.author_path/3' function. -->
+        <%= if book.author do %>
+          by
+        <%= link book.author.name, to: Routes.author_path(@conn, :show, book.author) %>
+        <!-- End the 'if' block. -->
+        <% end %>
+      </li>
+    <!-- End the 'for' loop. -->
+    <% end %>
+  <!-- Close the unordered list. -->
+  </ul>
+</li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.tag_path(@conn, :edit, @tag) %></span> |
+<span><%= link "Back", to: Routes.tag_path(@conn, :index) %></span>
