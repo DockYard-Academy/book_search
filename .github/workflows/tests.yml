@@ -16,11 +16,16 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
+    name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+    strategy:
+      matrix:
+        otp: ['20.3', '21.3', '22.2']
+        elixir: ['1.8.2', '1.9.4']
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-elixir@v1
+      - uses: erlef/setup-beam@v1
         with:
-          otp-version: '22.2'
-          elixir-version: '1.9.4'
+          otp-version: ${{matrix.otp}}
+          elixir-version: ${{matrix.elixir}}
       - run: mix deps.get
       - run: mix test
